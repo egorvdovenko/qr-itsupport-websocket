@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a websocket service for QR IT Support. It allows for real-time communication between the IT support team and the users.
+This project is a websocket service for IT support. It allows for real-time communication between the IT support team and the users.
 
 ## Installation
 
