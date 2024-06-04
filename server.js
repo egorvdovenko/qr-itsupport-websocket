@@ -2,7 +2,9 @@ const express = require('express');
 const WebSocket = require('ws');
 
 const app = express();
-const port = 8040;
+
+const port = process.env.PORT || 8040;
+const host = process.env.HOST || '0.0.0.0';
 
 // Create a new WebSocket server
 const wss = new WebSocket.Server({ noServer: true });
@@ -21,8 +23,8 @@ wss.on('connection', (ws) => {
 });
 
 // Handle HTTP requests for WebSocket upgrade
-const server = app.listen(port, () => {
-  console.log(`WebSocket server running on http://localhost:${port}`);
+const server = app.listen(port, host, () => {
+  console.log(`WebSocket server is running on http://${host}:${port}`);
 });
 
 server.on('upgrade', (request, socket, head) => {
@@ -33,6 +35,10 @@ server.on('upgrade', (request, socket, head) => {
 
 // Express endpoint to broadcast messages to all WebSocket clients
 app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('WebSocket server is running!');
+});
 
 app.post('/broadcast', (req, res) => {
   const message = req.body.message;
